@@ -1,14 +1,3 @@
-// await fetch("http://localhost:5678/api/users/login")
-//   .then(function (response) {
-//     if (response.status !== 200) {
-//       throw new Error(response.status);
-//     }
-//   })
-//   .catch(function (error) {
-//     console.log("Erreur:", error);
-//     return;
-//   });
-
 console.log(fetch(" http://localhost:5678/api/works"));
 function identification() {
   const identifiant = document.getElementById("myLogin");
@@ -16,13 +5,13 @@ function identification() {
     event.preventDefault();
     const identifiant = {
       email: document.getElementById("email").value,
-      motDePasse: document.getElementById("mdp").value,
+      password: document.getElementById("mdp").value,
     };
     let emailRegExp = new RegExp("[a-z0-9._-]+@[a-z0-9._-]+\\.[a-z0-9._-]+");
     console.log(identifiant);
-    console.log(identifiant.motDePasse.length);
+    console.log(identifiant.password.length);
     if (
-      identifiant.motDePasse.length < 8 ||
+      identifiant.password.length < 4 ||
       !emailRegExp.test(identifiant.email)
     ) {
       // alert("Erreur dans l’identifiant ou le mot de passe");
@@ -38,7 +27,7 @@ function identification() {
         });
         console.log(response);
         if (response.ok) {
-          const responseData = (await response).text();
+          const responseData = await response.json();
           console.log(responseData);
           window.location.href = "index.html";
         } else {
@@ -52,7 +41,11 @@ function identification() {
         alert("Erreur dans l’identifiant ou le mot de passe");
       }
     }
-    // localStorage.setItem("mot de passe", motDePasse);
+    const token =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwMDQ3ODcyNiwiZXhwIjoxNzAwNTY1MTI2fQ.oX-BCV6NVvJ85ByZHxFR2mg0aNt51X7uoZHHAcpbS1I";
+    localStorage.setItem("token", token);
+    localStorage.getItem("token", token);
+    // localStorage.setItem("password", password);
     // localStorage.setItem("email", email);
   });
 }
@@ -65,17 +58,17 @@ identification();
 //     event.preventDefault();
 
 //     let email = document.getElementById("email").value;
-//     let motDePasse = document.getElementById("mdp").value;
+//     let password = document.getElementById("mdp").value;
 //     let emailRegExp = new RegExp("[a-z0-9._-]+@[a-z0-9._-]+\\.[a-z0-9._-]+");
 
-//     if (motDePasse.length < 8 || !emailRegExp.test(email)) {
+//     if (password.length < 8 || !emailRegExp.test(email)) {
 //       alert("Erreur dans l’identifiant ou le mot de passe");
 //       return;
 //     } else {
 //       window.location.href = "index.html";
 //     }
 
-//     localStorage.setItem("mot de passe", motDePasse);
+//     localStorage.setItem("mot de passe", password);
 //     localStorage.setItem("email", email);
 //   });
 // }

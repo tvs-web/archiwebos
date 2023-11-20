@@ -12,7 +12,7 @@ await fetch("http://localhost:5678/api/works/")
     return;
   });
 //Récupération des travaux eventuellement stockées dans le localStorage
-// let workes = window.localStorage.getItem("works");
+let workes = window.localStorage.getItem("works");
 if (workes === null) {
   // Récupération des pièces depuis l'API
   const url = "http://localhost:5678/api/works/";
