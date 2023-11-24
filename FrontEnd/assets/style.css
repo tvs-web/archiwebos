@@ -136,8 +136,54 @@ body {
 }
 header {
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   margin: 50px 0;
+}
+.login {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 50px 0;
+}
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 50px 0;
+  background-color: transparent;
+  z-index: 1;
+}
+
+.entete {
+  display: flex;
+  flex-wrap: wrap;
+  text-align: center;
+  justify-content: center;
+  background-color: black;
+  color: white;
+  padding: 10px;
+  margin-top: 0;
+  z-index: 0;
+  max-width: 1440px;
+  margin: 0;
+}
+.mesprojets {
+  display: flex;
+  justify-content: center;
+  flex-direction: row-reverse;
+}
+.entete1 {
+  /* display: flex; */
+  /* flex-wrap: wrap; */
+  /* text-align: center; */
+  /* gap: 1 rem; */
+  /* justify-content: center; */
+  /* background-color: white; */
+  /* color: black; */
+  padding: 10px;
+  /* margin-top: 0; */
+  /* z-index: 0; */
 }
 section {
   margin: 50px 0;

@@ -1,4 +1,6 @@
 // console.log("hello");
+// localStorage.clear;
+// entete.innerHTML = "";
 
 // Récupération des pièces depuis l'API
 await fetch("http://localhost:5678/api/works/")
@@ -115,5 +117,65 @@ async function callApi() {
   });
 }
 callApi();
-// import { genererLogin } from "./login.js";
-// genererLogin();
+
+function connexion() {
+  const tokens = localStorage.getItem("token");
+  console.log(tokens);
+  const filtres = document.querySelector(".filtres");
+  const projects = document.querySelector(".gallery");
+  const entete = document.querySelector(".entete");
+  const header = document.querySelector("header");
+  const title = document.querySelector("h1");
+  const nav = document.querySelector("nav");
+
+  console.log(nav);
+  if (tokens !== null && tokens !== "") {
+    filtres.classList.remove("filtres");
+    const divHeader = document.createElement("div");
+    console.log(header);
+    divHeader.classList.add("header");
+
+    // creation div pour insertion mode edit sur projet
+    const divMesProjets = document.createElement("div");
+    console.log(divMesProjets);
+    divMesProjets.classList.add("entete1");
+    // header.insertBefore(divMesProjets, portfolio.firstChild);
+
+    // creation icone et paragraphe mode edit
+    const enteteIcone = document.createElement("i");
+    enteteIcone.className = "fa-regular fa-pen-to-square";
+    const enteteEdit = document.createElement("p");
+    enteteEdit.innerText = "mode edition";
+
+    header.appendChild(entete);
+    entete.appendChild(enteteIcone);
+    entete.appendChild(enteteEdit);
+    header.appendChild(divHeader);
+    divHeader.appendChild(title);
+    divHeader.appendChild(nav);
+
+    const portfolio = document.getElementById("portfolio");
+    const mesProjets = document.createElement("div");
+    mesProjets.classList.add("mesprojets");
+    const h2MesProjets = document.getElementById("projets");
+    console.log(portfolio);
+    const cloneEnteteIcone = enteteIcone.cloneNode(true);
+    const enteteModif = document.createElement("a");
+    enteteModif.innerText = " " + "modifier";
+    // const cloneEnteteEdit = enteteEdit.cloneNode(true);
+    // const divMesProjets2 = divMesProjets.entete.children[2];
+    portfolio.appendChild(divMesProjets);
+    portfolio.appendChild(mesProjets);
+    divMesProjets.appendChild(cloneEnteteIcone);
+    divMesProjets.appendChild(enteteModif);
+    portfolio.insertBefore(mesProjets, portfolio.firstChild);
+    portfolio.insertBefore(divMesProjets, portfolio.children[1]);
+    mesProjets.appendChild(divMesProjets);
+    mesProjets.appendChild(h2MesProjets);
+  } else {
+    entete.remove("entete");
+    header.classList.add("login");
+  }
+}
+connexion();
+localStorage.clear();
