@@ -1,7 +1,7 @@
 // console.log("hello");
 // localStorage.clear;
 // entete.innerHTML = "";
-
+import { popup } from "./popup.js";
 // Récupération des pièces depuis l'API
 await fetch("http://localhost:5678/api/works/")
   .then(function (response) {
@@ -45,13 +45,24 @@ async function callApi() {
       // console.log(works.length);
       const figure = works[i];
       const projectsFigure = document.createElement("figure");
+      projectsFigure.classList.add("fig");
       const projectsImage = document.createElement("img");
       projectsImage.src = figure.imageUrl;
       const projectsfigcaption = document.createElement("figcaption");
       projectsfigcaption.innerText = figure.title;
+      const trash = document.createElement("button");
+      trash.id = "trash";
+      const trashIcone = document.createElement("i");
+      trashIcone.className = "fa-regular fa-trash-can";
+      trashIcone.style.color = "white";
+      trashIcone.style.position = "relative";
+
       projectsFigure.appendChild(projectsImage);
       projectsFigure.appendChild(projectsfigcaption);
       projects.appendChild(projectsFigure);
+      projectsFigure.appendChild(trashIcone);
+      projectsFigure.appendChild(trash);
+      trash.appendChild(trashIcone);
     }
   }
   //--------------------------------------------------------------
@@ -122,7 +133,6 @@ function connexion() {
   const tokens = localStorage.getItem("token");
   console.log(tokens);
   const filtres = document.querySelector(".filtres");
-  const projects = document.querySelector(".gallery");
   const entete = document.querySelector(".entete");
   const header = document.querySelector("header");
   const title = document.querySelector("h1");
@@ -162,6 +172,8 @@ function connexion() {
     const cloneEnteteIcone = enteteIcone.cloneNode(true);
     const enteteModif = document.createElement("a");
     enteteModif.innerText = " " + "modifier";
+    enteteModif.href = "#";
+    enteteModif.id = "modif";
     // const cloneEnteteEdit = enteteEdit.cloneNode(true);
     // const divMesProjets2 = divMesProjets.entete.children[2];
     portfolio.appendChild(divMesProjets);
@@ -179,3 +191,60 @@ function connexion() {
 }
 connexion();
 localStorage.clear();
+function modifier() {
+  const boutonModifier = document.getElementById("modif");
+  console.log(boutonModifier);
+  boutonModifier.addEventListener("click", function (event) {
+    event.preventDefault();
+    popup();
+    const popupBack1 = document.querySelector(".popupBackground");
+    popupBack1.classList.toggle("active");
+    const boutonFermer = document.getElementById("closemodal");
+    console.log(boutonFermer);
+    boutonFermer.addEventListener("click", function () {
+      // alert("rrr");
+      popupBack1.classList.remove("active");
+    });
+    const btnTrash = document.getElementById("trash");
+    console.log(btnTrash);
+
+    const figs = document.querySelectorAll(".fig");
+    console.log(figs);
+
+    figs.forEach(function (fig) {
+      const btnTrash = fig.querySelector("#trash");
+      console.log(btnTrash);
+
+      btnTrash.addEventListener("click", function () {
+        const parentFig = btnTrash.closest(".fig");
+        const imgFig = parentFig.querySelector("img");
+        console.log(parentFig);
+        if (imgFig) {
+          const imgSrc = imgFig.src;
+          console.log(imgSrc);
+        }
+        parentFig.remove();
+      });
+    });
+  });
+}
+modifier();
+// btnTrash.addEventListener("click", function () {
+//         toto.forEach((figure,figureIndex) => {
+//           if (figureIndex===figure){
+//             console.log("coucou");
+// const btnTrash = document.getElementById("trash");
+// console.log(btnTrash);
+// const figs = document.querySelectorAll(".fig");
+// console.log(figs);
+// for (let i = 0; i < figs.length; i++) {
+//   const toto = figs[i];
+//   console.log(toto);
+// }
+// figs.forEach(function (fig) {
+//   btnTrash.addEventListener("click", function () {
+//     const parentButton = btnTrash.closest(".fig");
+//     console.log(parentButton);
+//     parentButton.remove();
+//   });
+// });

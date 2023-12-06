@@ -1,0 +1,40 @@
+export function popup() {
+  const main = document.querySelector("main");
+  const popupBack = document.createElement("div");
+  popupBack.classList.add("popupBackground");
+  const popup = document.createElement("div");
+  popup.classList.add("popup");
+  const popupIcones = document.createElement("div");
+  popupIcones.classList.add("popupicones");
+  const returnIcone = document.createElement("i");
+  returnIcone.className = "fa-solid fa-arrow-left fa-2xl";
+  const closeModal = document.createElement("button");
+  closeModal.id = "closemodal";
+  const closeIcone = document.createElement("i");
+  closeIcone.className = "fa-solid fa-xmark fa-2xl";
+  const title = document.createElement("h2");
+  title.innerText = "Galerie photo";
+  const projects = document.querySelector("#portfolio .gallery");
+  const cloneProjects = projects.cloneNode(true);
+  cloneProjects.classList.add("newdispo");
+  const popupBtn = document.createElement("input");
+  popupBtn.type = "submit";
+  popupBtn.value = "Ajouter une photo";
+  popupBtn.classList.add("btnpopup");
+  const trash = document.createElement("button");
+  trash.id = "trash";
+  trash.setAttribute("onclick", "delImage(this)");
+  console.log(cloneProjects);
+
+  main.appendChild(popupBack);
+  main.insertBefore(popupBack, main.firstChild);
+  popupBack.appendChild(popup);
+  popup.appendChild(popupIcones);
+  popupIcones.appendChild(returnIcone);
+  popupIcones.appendChild(closeModal);
+  closeModal.appendChild(closeIcone);
+  popup.appendChild(title);
+  popup.appendChild(cloneProjects);
+  popup.appendChild(popupBtn);
+  cloneProjects.appendChild(trash);
+}

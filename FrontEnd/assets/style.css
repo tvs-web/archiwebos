@@ -111,6 +111,7 @@ body {
 ol,
 ul {
   list-style: none;
+  z-index: 0;
 }
 blockquote,
 q {
@@ -163,7 +164,7 @@ header {
   justify-content: center;
   background-color: black;
   color: white;
-  z-index: 1;
+  z-index: 0;
   max-width: 1440px;
   margin: 0 -150px;
   height: 59px;
@@ -263,8 +264,11 @@ li a:hover {
   text-align: center;
   margin-bottom: 1em;
 }
+#portfolio figure {
+  position: relative;
+  z-index: -1;
+}
 .gallery {
-  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-column-gap: 20px;
@@ -273,6 +277,13 @@ li a:hover {
 
 .gallery img {
   width: 100%;
+  z-index: -1;
+}
+.gallery i {
+  position: absolute;
+  background-color: black;
+  padding: 2px;
+  display: none;
 }
 #contact {
   width: 50%;
@@ -362,4 +373,110 @@ footer nav ul {
   color: #c4c0c0;
   font-style: italic;
   text-align: center;
+}
+* {
+  box-sizing: border-box;
+}
+.popupBackground {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(68, 66, 66, 0.8);
+}
+.popupBackground.active {
+  display: block;
+}
+.popup {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  color: black;
+  position: relative;
+  border-radius: 10px;
+  width: 630px;
+  /* height: 688px;s */
+  top: 50%;
+  left: 50%;
+  padding: 20px;
+  transform: translate(-50%, -50%);
+  align-items: center;
+  z-index: 2;
+}
+.popupicones {
+  display: flex;
+  /* display: inline; */
+  justify-content: space-between;
+  width: 100%;
+  /* margin-left: auto; */
+  /* width: 24px;
+  height: 24px; */
+  /* align-items: center; */
+}
+.popupicones button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+.popup h2 {
+  /* display: inline; */
+  font-size: 26px;
+  font-family: Work Sans;
+  font-weight: 400;
+  color: black;
+  margin-bottom: 46px;
+  margin-top: 10px;
+  /* justify-content: center; */
+}
+.fa-arrow-left {
+  visibility: hidden;
+}
+#modif {
+  text-decoration: none;
+  color: black;
+  font-size: 24x;
+}
+.popup img {
+  width: 78px;
+}
+.popup figure {
+  position: relative;
+}
+.popup button {
+  padding: 0;
+}
+#trash {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 8px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.popup figure i {
+  position: absolute;
+  display: block;
+}
+.popup figcaption {
+  display: none;
+}
+.newdispo {
+  /* width: 420px; */
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  grid-column-gap: 7px;
+  /* margin-bottom: 45px; */
+  padding-bottom: 80px;
+  border-bottom: solid;
+  border-width: 1px;
+  color: rgb(92, 93, 93);
+}
+input.btnpopup {
+  height: 36px;
+  width: 237px;
+  margin-top: 45px;
+  margin-bottom: 45px;
+  border-style: unset;
 }
