@@ -1,7 +1,8 @@
 // console.log("hello");
 // localStorage.clear;
 // entete.innerHTML = "";
-import { popup } from "./popup.js";
+import { popup1 } from "./popup.js";
+import { popup2 } from "./popup.js";
 // Récupération des pièces depuis l'API
 await fetch("http://localhost:5678/api/works/")
   .then(function (response) {
@@ -49,7 +50,7 @@ async function callApi() {
       const projectsImage = document.createElement("img");
       projectsImage.src = figure.imageUrl;
       const projectsfigcaption = document.createElement("figcaption");
-      projectsfigcaption.innerText = figure.title;
+      projectsfigcaption.textContent = figure.title;
       const trash = document.createElement("button");
       trash.id = "trash";
       const trashIcone = document.createElement("i");
@@ -57,6 +58,7 @@ async function callApi() {
       trashIcone.style.color = "white";
       trashIcone.style.position = "relative";
 
+      console.log(figure);
       projectsFigure.appendChild(projectsImage);
       projectsFigure.appendChild(projectsfigcaption);
       projects.appendChild(projectsFigure);
@@ -70,16 +72,16 @@ async function callApi() {
   const filtres = document.querySelector(".filtres");
   const buttonTous = document.createElement("button");
   buttonTous.classList.add("btn_tous");
-  buttonTous.innerText = "Tous";
+  buttonTous.textContent = "Tous";
   const buttonObjets = document.createElement("button");
   buttonObjets.classList.add("btn_objets");
-  buttonObjets.innerText = "Objets";
+  buttonObjets.textContent = "Objets";
   const buttonAppartements = document.createElement("button");
   buttonAppartements.classList.add("btn_appartements");
-  buttonAppartements.innerText = "Appartements";
+  buttonAppartements.textContent = "Appartements";
   const buttonHotels_Restaurants = document.createElement("button");
   buttonHotels_Restaurants.classList.add("btn_hotels_restaurants");
-  buttonHotels_Restaurants.innerText = "Hotels & restaurants";
+  buttonHotels_Restaurants.textContent = "Hotels & restaurants";
   filtres.appendChild(buttonTous);
   filtres.appendChild(buttonObjets);
   filtres.appendChild(buttonAppartements);
@@ -155,7 +157,7 @@ function connexion() {
     const enteteIcone = document.createElement("i");
     enteteIcone.className = "fa-regular fa-pen-to-square";
     const enteteEdit = document.createElement("p");
-    enteteEdit.innerText = "mode edition";
+    enteteEdit.textContent = "mode edition";
 
     header.appendChild(entete);
     entete.appendChild(enteteIcone);
@@ -171,7 +173,7 @@ function connexion() {
     console.log(portfolio);
     const cloneEnteteIcone = enteteIcone.cloneNode(true);
     const enteteModif = document.createElement("a");
-    enteteModif.innerText = " " + "modifier";
+    enteteModif.textContent = " " + "modifier";
     enteteModif.href = "#";
     enteteModif.id = "modif";
     // const cloneEnteteEdit = enteteEdit.cloneNode(true);
@@ -191,60 +193,85 @@ function connexion() {
 }
 connexion();
 localStorage.clear();
-function modifier() {
-  const boutonModifier = document.getElementById("modif");
-  console.log(boutonModifier);
-  boutonModifier.addEventListener("click", function (event) {
-    event.preventDefault();
-    popup();
-    const popupBack1 = document.querySelector(".popupBackground");
-    popupBack1.classList.toggle("active");
+function toto() {
+  function fermer() {
     const boutonFermer = document.getElementById("closemodal");
     console.log(boutonFermer);
+    const popupBack1 = document.querySelector(".popupBackground");
+    popupBack1.classList.toggle("active");
     boutonFermer.addEventListener("click", function () {
       // alert("rrr");
       popupBack1.classList.remove("active");
     });
-    const btnTrash = document.getElementById("trash");
-    console.log(btnTrash);
+  }
 
+  function modifier() {
+    const boutonModifier = document.getElementById("modif");
+    console.log(boutonModifier);
+
+    boutonModifier.addEventListener("click", function (event) {
+      event.preventDefault();
+      popup1();
+      fermerFenetre();
+      trash();
+      ajouter();
+      fermer();
+    });
+  }
+
+  function trash() {
     const figs = document.querySelectorAll(".fig");
     console.log(figs);
-
     figs.forEach(function (fig) {
       const btnTrash = fig.querySelector("#trash");
       console.log(btnTrash);
-
       btnTrash.addEventListener("click", function () {
-        const parentFig = btnTrash.closest(".fig");
-        const imgFig = parentFig.querySelector("img");
-        console.log(parentFig);
-        if (imgFig) {
-          const imgSrc = imgFig.src;
-          console.log(imgSrc);
-        }
+        const parentFig = btnTrash.closest("figure");
         parentFig.remove();
       });
     });
+  }
+  function ajouter() {
+    const boutonAjouter = document.querySelector(".btnpopup");
+    const popupBack1 = document.querySelector(".popupBackground");
+
+    boutonAjouter.addEventListener("click", function (event) {
+      event.preventDefault();
+      document.querySelector(".popup").innerHTML = "";
+      popup2();
+      popupBack1.classList.toggle("active");
+
+      fermer();
+      fermerFenetre();
+      b_return();
+    });
+  }
+  modifier();
+}
+function fermerFenetre() {
+  const popupBack1 = document.querySelector(".popupBackground");
+
+  popupBack1.addEventListener("click", function (event) {
+    // document.querySelector(".popup").innerHTML = "";
+
+    if (event.target === popupBack1) {
+      // alert("rrr");
+      popupBack1.classList.remove("active");
+    }
   });
 }
-modifier();
-// btnTrash.addEventListener("click", function () {
-//         toto.forEach((figure,figureIndex) => {
-//           if (figureIndex===figure){
-//             console.log("coucou");
-// const btnTrash = document.getElementById("trash");
-// console.log(btnTrash);
-// const figs = document.querySelectorAll(".fig");
-// console.log(figs);
-// for (let i = 0; i < figs.length; i++) {
-//   const toto = figs[i];
-//   console.log(toto);
-// }
-// figs.forEach(function (fig) {
-//   btnTrash.addEventListener("click", function () {
-//     const parentButton = btnTrash.closest(".fig");
-//     console.log(parentButton);
-//     parentButton.remove();
-//   });
-// });
+function b_return() {
+  const boutonReturn = document.getElementById("returnmodal");
+  console.log(boutonReturn);
+  const popupBack2 = document.querySelector(".popup2");
+
+  boutonReturn.addEventListener("click", function (event) {
+    event.preventDefault();
+    document.querySelector(".popup2").innerHTML = "";
+    alert("rrr");
+    popupBack2.classList.remove("active");
+    popup1();
+  });
+}
+
+toto();
