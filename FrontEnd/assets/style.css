@@ -377,8 +377,9 @@ footer nav ul {
 * {
   box-sizing: border-box;
 }
-.popupBackground {
-  display: none;
+.popupBackground,
+.popupBackground2 {
+  /* display: none; */
   position: fixed;
   top: 0;
   left: 0;
@@ -386,9 +387,10 @@ footer nav ul {
   width: 100%;
   background-color: rgba(68, 66, 66, 0.8);
 }
-.popupBackground.active {
+/* .popupBackground.active,
+.popupBackground2.active {
   display: block;
-}
+} */
 .popup,
 .popup2 {
   display: flex;
@@ -405,6 +407,9 @@ footer nav ul {
   transform: translate(-50%, -50%);
   align-items: center;
   z-index: 2;
+}
+.popup2 {
+  z-index: 6;
 }
 .popupicones {
   display: flex;
@@ -442,7 +447,7 @@ footer nav ul {
 #modif {
   text-decoration: none;
   color: black;
-  font-size: 24x;
+  font-size: 14px;
 }
 .popup img,
 .popup2 img {

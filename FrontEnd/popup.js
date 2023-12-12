@@ -44,8 +44,8 @@ export function popup1() {
 }
 export function popup2() {
   const main = document.querySelector("main");
-  const popupBack = document.createElement("div");
-  popupBack.classList.add("popupBackground");
+  const popupBack2 = document.createElement("div");
+  popupBack2.classList.add("popupBackground2");
   const title2 = document.createElement("h2");
   title2.textContent = "Ajout photo";
 
@@ -57,8 +57,8 @@ export function popup2() {
   returnModal.id = "returnmodal";
   const returnIcone = document.createElement("i");
   returnIcone.classList.add("fa-solid", "fa-arrow-left", "fa-2xl", "ajout");
-  const closeModal = document.createElement("button");
-  closeModal.id = "closemodal";
+  const closeModal2 = document.createElement("button");
+  closeModal2.id = "closemodal";
   const closeIcone = document.createElement("i");
   closeIcone.classList.add("fa-solid", "fa-xmark", "fa-2xl");
   const cadrePhoto = document.createElement("div");
@@ -98,14 +98,14 @@ export function popup2() {
   popupBtnAjout.id = "valider";
   popupBtnAjout.textContent = "Valider";
 
-  main.appendChild(popupBack);
-  main.insertBefore(popupBack, main.firstChild);
-  popupBack.appendChild(popup2);
+  main.appendChild(popupBack2);
+  main.insertBefore(popupBack2, main.firstChild);
+  popupBack2.appendChild(popup2);
   popup2.appendChild(popupIcones);
   popupIcones.appendChild(returnModal);
-  popupIcones.appendChild(closeModal);
+  popupIcones.appendChild(closeModal2);
   returnModal.appendChild(returnIcone);
-  closeModal.appendChild(closeIcone);
+  closeModal2.appendChild(closeIcone);
   popup2.appendChild(title2);
   popup2.appendChild(cadrePhoto);
   cadrePhoto.appendChild(imgIcone);

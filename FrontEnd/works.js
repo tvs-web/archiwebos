@@ -11,7 +11,7 @@ await fetch("http://localhost:5678/api/works/")
     }
   })
   .catch(function (error) {
-    console.log("Erreur:", error);
+    // console.log("Erreur:", error);
     return;
   });
 //Récupération des travaux eventuellement stockées dans le localStorage
@@ -21,7 +21,7 @@ if (workes === null) {
   const url = "http://localhost:5678/api/works/";
   const reponse = await fetch(url);
   const works = await reponse.json();
-  console.log(works);
+  // console.log(works);
   // Transformation des pièces en JSON
   const valeursWorks = JSON.stringify(works);
   // Stockage des informations dans le localStorage
@@ -58,7 +58,7 @@ async function callApi() {
       trashIcone.style.color = "white";
       trashIcone.style.position = "relative";
 
-      console.log(figure);
+      // console.log(figure);
       projectsFigure.appendChild(projectsImage);
       projectsFigure.appendChild(projectsfigcaption);
       projects.appendChild(projectsFigure);
@@ -103,7 +103,7 @@ async function callApi() {
     });
     document.querySelector(".gallery").innerHTML = "";
     genererWorks(worksObjets);
-    console.log(worksObjets);
+    // console.log(worksObjets);
   });
 
   const boutonAppartements = document.querySelector(".btn_appartements");
@@ -133,23 +133,23 @@ callApi();
 
 function connexion() {
   const tokens = localStorage.getItem("token");
-  console.log(tokens);
+  // console.log(tokens);
   const filtres = document.querySelector(".filtres");
   const entete = document.querySelector(".entete");
   const header = document.querySelector("header");
   const title = document.querySelector("h1");
   const nav = document.querySelector("nav");
 
-  console.log(nav);
+  // console.log(nav);
   if (tokens !== null && tokens !== "") {
     filtres.classList.remove("filtres");
     const divHeader = document.createElement("div");
-    console.log(header);
+    // console.log(header);
     divHeader.classList.add("header");
 
     // creation div pour insertion mode edit sur projet
     const divMesProjets = document.createElement("div");
-    console.log(divMesProjets);
+    // console.log(divMesProjets);
     divMesProjets.classList.add("entete1");
     // header.insertBefore(divMesProjets, portfolio.firstChild);
 
@@ -170,7 +170,7 @@ function connexion() {
     const mesProjets = document.createElement("div");
     mesProjets.classList.add("mesprojets");
     const h2MesProjets = document.getElementById("projets");
-    console.log(portfolio);
+    // console.log(portfolio);
     const cloneEnteteIcone = enteteIcone.cloneNode(true);
     const enteteModif = document.createElement("a");
     enteteModif.textContent = " " + "modifier";
@@ -193,85 +193,85 @@ function connexion() {
 }
 connexion();
 localStorage.clear();
-function toto() {
-  function fermer() {
-    const boutonFermer = document.getElementById("closemodal");
-    console.log(boutonFermer);
-    const popupBack1 = document.querySelector(".popupBackground");
-    popupBack1.classList.toggle("active");
-    boutonFermer.addEventListener("click", function () {
-      // alert("rrr");
-      popupBack1.classList.remove("active");
-    });
-  }
-
-  function modifier() {
-    const boutonModifier = document.getElementById("modif");
-    console.log(boutonModifier);
-
-    boutonModifier.addEventListener("click", function (event) {
-      event.preventDefault();
-      popup1();
-      fermerFenetre();
-      trash();
-      ajouter();
-      fermer();
-    });
-  }
-
-  function trash() {
-    const figs = document.querySelectorAll(".fig");
-    console.log(figs);
-    figs.forEach(function (fig) {
-      const btnTrash = fig.querySelector("#trash");
-      console.log(btnTrash);
-      btnTrash.addEventListener("click", function () {
-        const parentFig = btnTrash.closest("figure");
-        parentFig.remove();
-      });
-    });
-  }
-  function ajouter() {
-    const boutonAjouter = document.querySelector(".btnpopup");
-    const popupBack1 = document.querySelector(".popupBackground");
-
-    boutonAjouter.addEventListener("click", function (event) {
-      event.preventDefault();
-      document.querySelector(".popup").innerHTML = "";
-      popup2();
-      popupBack1.classList.toggle("active");
-
-      fermer();
-      fermerFenetre();
-      b_return();
-    });
-  }
-  modifier();
+function fermer() {
+  const boutonFermer = document.getElementById("closemodal");
+  console.log(boutonFermer);
+  const popupBack = document.querySelector(".popupBackground");
+  const popupBack2 = document.querySelector(".popupBackground2");
+  boutonFermer.addEventListener("click", function (event) {
+    popupBack.style.display = "none";
+    popupBack2.style.display = "none";
+  });
 }
+
+function modifier() {
+  const boutonModifier = document.getElementById("modif");
+  const popupBack = document.querySelector(".popupBackground");
+  boutonModifier.addEventListener("click", function (event) {
+    event.preventDefault();
+    popup1();
+    fermer();
+    trash();
+    ajouter();
+    fermerFenetre();
+  });
+}
+
+function trash() {
+  const figs = document.querySelectorAll(".fig");
+  figs.forEach(function (fig) {
+    const btnTrash = fig.querySelector("#trash");
+    btnTrash.addEventListener("click", function () {
+      const parentFig = btnTrash.closest("figure");
+      parentFig.remove();
+    });
+  });
+}
+function ajouter() {
+  const boutonAjouter = document.querySelector(".btnpopup");
+  const popupBack = document.querySelector(".popupBackground");
+  const popupBack2 = document.querySelector(".popupBackground2");
+  boutonAjouter.addEventListener("click", function (event) {
+    event.preventDefault();
+    popupBack.style.display = "none";
+    popup2();
+    fermer();
+    fermerFenetre();
+    //     b_return();
+  });
+}
+// function b_return() {
+//   const boutonReturn = document.getElementById("returnmodal");
+//   console.log(boutonReturn);
+
+//   const popupBack2 = document.querySelector(".popupBackground2");
+//   const popupBack1 = document.querySelector(".popupBackground");
+//   boutonReturn.addEventListener("click", function (event) {
+//     event.preventDefault();
+//     document.querySelector(".popupBackground2").innerHTML = "";
+//     popupBack2.style.display = "none";
+//     alert("rrr");
+//     popup1();
+//     fermerFenetre();
+//     trash();
+//     ajouter();
+//     fermer();
+//   });
+// }
+
 function fermerFenetre() {
-  const popupBack1 = document.querySelector(".popupBackground");
+  const popupBack = document.querySelector(".popupBackground");
+  const popupBack2 = document.querySelector(".popupBackground2");
 
-  popupBack1.addEventListener("click", function (event) {
-    // document.querySelector(".popup").innerHTML = "";
-
-    if (event.target === popupBack1) {
-      // alert("rrr");
-      popupBack1.classList.remove("active");
+  popupBack.addEventListener("click", function (event) {
+    if (event.target === popupBack) {
+      popupBack.style.display = "none";
+    }
+  });
+  popupBack2.addEventListener("click", function (event) {
+    if (event.target === popupBack2) {
+      popupBack2.style.display = "none";
     }
   });
 }
-function b_return() {
-  const boutonReturn = document.getElementById("returnmodal");
-  console.log(boutonReturn);
-  const popupBack2 = document.querySelector(".popup2");
-
-  boutonReturn.addEventListener("click", function (event) {
-    event.preventDefault();
-    document.querySelector(".popup2").innerHTML = "";
-    alert("rrr");
-    popupBack2.classList.remove("active");
-    popup1();
-  });
-}
-
-toto();
+modifier();
