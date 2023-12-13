@@ -237,27 +237,26 @@ function ajouter() {
     popup2();
     fermer();
     fermerFenetre();
-    //     b_return();
+    b_return();
   });
 }
-// function b_return() {
-//   const boutonReturn = document.getElementById("returnmodal");
-//   console.log(boutonReturn);
+function b_return() {
+  const boutonReturn = document.getElementById("returnmodal");
+  console.log(boutonReturn);
 
-//   const popupBack2 = document.querySelector(".popupBackground2");
-//   const popupBack1 = document.querySelector(".popupBackground");
-//   boutonReturn.addEventListener("click", function (event) {
-//     event.preventDefault();
-//     document.querySelector(".popupBackground2").innerHTML = "";
-//     popupBack2.style.display = "none";
-//     alert("rrr");
-//     popup1();
-//     fermerFenetre();
-//     trash();
-//     ajouter();
-//     fermer();
-//   });
-// }
+  const popupBack2 = document.querySelector(".popupBackground2");
+  const popupBack = document.querySelector(".popupBackground");
+  boutonReturn.addEventListener("click", function (event) {
+    event.preventDefault();
+    popupBack2.style.display = "none";
+    alert("rrr");
+    popup1();
+    fermerFenetre();
+    trash();
+    ajouter();
+    fermer();
+  });
+}
 
 function fermerFenetre() {
   const popupBack = document.querySelector(".popupBackground");
