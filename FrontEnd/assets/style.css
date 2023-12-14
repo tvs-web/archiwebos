@@ -496,22 +496,31 @@ input.btnpopup {
 }
 .cadrephoto {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin: 10px;
-  position: relative;
   width: 420px;
   height: 169px;
   background-color: #e8f1f6;
   border-radius: 3px;
-  align-items: center;
 }
-.cadrephoto p {
+.cadrephotofirst {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  /* display: none; */
+}
+.cadrephotofirst p {
   font-size: 10px;
 }
 .fa-image {
   color: #b9c5cc;
   font-size: 76px;
   padding: 13px;
+}
+#cadrephotoimg {
+  display: none;
 }
 #ajoutphoto {
   height: 36px;

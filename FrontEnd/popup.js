@@ -63,6 +63,8 @@ export function popup2() {
   closeIcone.classList.add("fa-solid", "fa-xmark", "fa-2xl");
   const cadrePhoto = document.createElement("div");
   cadrePhoto.classList.add("cadrephoto");
+  const cadrePhotoFirst = document.createElement("div");
+  cadrePhotoFirst.classList.add("cadrephotofirst");
   const imgIcone = document.createElement("i");
   imgIcone.classList.add("fa-regular", "fa-image");
   const ajoutPhoto = document.createElement("button");
@@ -70,6 +72,10 @@ export function popup2() {
   ajoutPhoto.textContent = "+ Ajout photo";
   const cadrePhotoText = document.createElement("p");
   cadrePhotoText.textContent = "jpg, png : 4 mo max";
+  const cadrePhotoImg = document.createElement("img");
+  cadrePhotoImg.id = "cadrephotoimg";
+  cadrePhotoImg.src = "./images/";
+  cadrePhotoImg.alt = "image selectionnée";
   const formAjoutPhoto = document.createElement("form");
   formAjoutPhoto.id = "formAjoutPhoto";
   const labelTitre = document.createElement("label");
@@ -108,9 +114,12 @@ export function popup2() {
   closeModal2.appendChild(closeIcone);
   popup2.appendChild(title2);
   popup2.appendChild(cadrePhoto);
-  cadrePhoto.appendChild(imgIcone);
-  cadrePhoto.appendChild(ajoutPhoto);
-  cadrePhoto.appendChild(cadrePhotoText);
+  cadrePhoto.appendChild(cadrePhotoFirst);
+  cadrePhotoFirst.appendChild(imgIcone);
+  cadrePhotoFirst.appendChild(ajoutPhoto);
+  cadrePhotoFirst.appendChild(cadrePhotoText);
+  cadrePhoto.appendChild(cadrePhotoImg);
+
   popup2.appendChild(formAjoutPhoto);
   formAjoutPhoto.appendChild(labelTitre);
   formAjoutPhoto.appendChild(titreInput);

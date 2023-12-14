@@ -217,20 +217,35 @@ function modifier() {
   });
 }
 
-function trash() {
+async function trash() {
+  const url = "http://localhost:5678/api/works/";
+  const reponse = await fetch(url);
+  const works = await reponse.json();
+  console.log(works);
+
+  // ----------------------------------------------------
+
   const figs = document.querySelectorAll(".fig");
   figs.forEach(function (fig) {
     const btnTrash = fig.querySelector("#trash");
     btnTrash.addEventListener("click", function () {
       const parentFig = btnTrash.closest("figure");
       parentFig.remove();
+      console.log(works);
     });
   });
 }
-function ajouter() {
+async function ajouter() {
+  const url = "http://localhost:5678/api/works/";
+  const reponse = await fetch(url);
+  const works = await reponse.json();
+  console.log(works);
+
+  // ----------------------------------
   const boutonAjouter = document.querySelector(".btnpopup");
   const popupBack = document.querySelector(".popupBackground");
   const popupBack2 = document.querySelector(".popupBackground2");
+
   boutonAjouter.addEventListener("click", function (event) {
     event.preventDefault();
     popupBack.style.display = "none";
@@ -238,6 +253,7 @@ function ajouter() {
     fermer();
     fermerFenetre();
     b_return();
+    ajouterphoto();
   });
 }
 function b_return() {
@@ -271,6 +287,16 @@ function fermerFenetre() {
     if (event.target === popupBack2) {
       popupBack2.style.display = "none";
     }
+  });
+}
+function ajouterphoto() {
+  const cadrePhotoFirst = document.querySelector(".cadrephotofirst");
+  const cadrePhotoImg = document.getElementById("cadrephotoimg");
+  const ajoutPhoto = document.getElementById("ajoutphoto");
+  ajoutPhoto.addEventListener("click", function () {
+    alert("rrr");
+    cadrePhotoFirst.style.display = "none";
+    cadrePhotoImg.style.display = "block";
   });
 }
 modifier();
