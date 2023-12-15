@@ -1,6 +1,3 @@
-// console.log("hello");
-// localStorage.clear;
-// entete.innerHTML = "";
 import { popup1 } from "./popup.js";
 import { popup2 } from "./popup.js";
 // Récupération des pièces depuis l'API
@@ -11,7 +8,6 @@ await fetch("http://localhost:5678/api/works/")
     }
   })
   .catch(function (error) {
-    // console.log("Erreur:", error);
     return;
   });
 //Récupération des travaux eventuellement stockées dans le localStorage
@@ -21,7 +17,6 @@ if (workes === null) {
   const url = "http://localhost:5678/api/works/";
   const reponse = await fetch(url);
   const works = await reponse.json();
-  // console.log(works);
   // Transformation des pièces en JSON
   const valeursWorks = JSON.stringify(works);
   // Stockage des informations dans le localStorage
@@ -34,8 +29,6 @@ async function callApi() {
   const url = "http://localhost:5678/api/works/";
   const reponse = await fetch(url);
   const works = await reponse.json();
-  // console.log(works);
-  // console.log(reponse);
   genererWorks(works);
 
   function genererWorks(works) {
@@ -43,7 +36,6 @@ async function callApi() {
 
     for (let i = 0; i < works.length; i++) {
       const projects = document.querySelector(".gallery");
-      // console.log(works.length);
       const figure = works[i];
       const projectsFigure = document.createElement("figure");
       projectsFigure.classList.add("fig");
@@ -58,7 +50,6 @@ async function callApi() {
       trashIcone.style.color = "white";
       trashIcone.style.position = "relative";
 
-      // console.log(figure);
       projectsFigure.appendChild(projectsImage);
       projectsFigure.appendChild(projectsfigcaption);
       projects.appendChild(projectsFigure);
@@ -92,8 +83,6 @@ async function callApi() {
   boutonTous.addEventListener("click", function () {
     document.querySelector(".gallery").innerHTML = "";
     genererWorks(works);
-
-    // console.log(works);
   });
 
   const boutonObjets = document.querySelector(".btn_objets");
@@ -103,7 +92,6 @@ async function callApi() {
     });
     document.querySelector(".gallery").innerHTML = "";
     genererWorks(worksObjets);
-    // console.log(worksObjets);
   });
 
   const boutonAppartements = document.querySelector(".btn_appartements");
@@ -114,7 +102,6 @@ async function callApi() {
     });
     document.querySelector(".gallery").innerHTML = "";
     genererWorks(worksAppartements);
-    // console.log(worksAppartements);
   });
 
   const boutonHotels_restaurants = document.querySelector(
@@ -126,25 +113,21 @@ async function callApi() {
     });
     document.querySelector(".gallery").innerHTML = "";
     genererWorks(worksHotels_restaurants);
-    // console.log(worksHotels_restaurants);
   });
 }
 callApi();
 
 function connexion() {
   const tokens = localStorage.getItem("token");
-  // console.log(tokens);
   const filtres = document.querySelector(".filtres");
   const entete = document.querySelector(".entete");
   const header = document.querySelector("header");
   const title = document.querySelector("h1");
   const nav = document.querySelector("nav");
 
-  // console.log(nav);
   if (tokens !== null && tokens !== "") {
     filtres.classList.remove("filtres");
     const divHeader = document.createElement("div");
-    // console.log(header);
     divHeader.classList.add("header");
 
     // creation div pour insertion mode edit sur projet
@@ -170,14 +153,11 @@ function connexion() {
     const mesProjets = document.createElement("div");
     mesProjets.classList.add("mesprojets");
     const h2MesProjets = document.getElementById("projets");
-    // console.log(portfolio);
     const cloneEnteteIcone = enteteIcone.cloneNode(true);
     const enteteModif = document.createElement("a");
     enteteModif.textContent = " " + "modifier";
     enteteModif.href = "#";
     enteteModif.id = "modif";
-    // const cloneEnteteEdit = enteteEdit.cloneNode(true);
-    // const divMesProjets2 = divMesProjets.entete.children[2];
     portfolio.appendChild(divMesProjets);
     portfolio.appendChild(mesProjets);
     divMesProjets.appendChild(cloneEnteteIcone);
@@ -250,10 +230,10 @@ async function ajouter() {
     event.preventDefault();
     popupBack.style.display = "none";
     popup2();
+    ajouterphoto();
     fermer();
     fermerFenetre();
     b_return();
-    ajouterphoto();
   });
 }
 function b_return() {
@@ -291,12 +271,23 @@ function fermerFenetre() {
 }
 function ajouterphoto() {
   const cadrePhotoFirst = document.querySelector(".cadrephotofirst");
-  const cadrePhotoImg = document.getElementById("cadrephotoimg");
-  const ajoutPhoto = document.getElementById("ajoutphoto");
-  ajoutPhoto.addEventListener("click", function () {
-    alert("rrr");
-    cadrePhotoFirst.style.display = "none";
-    cadrePhotoImg.style.display = "block";
+  const ajoutPhoto = document.getElementById("ajoutphoto1");
+  ajoutPhoto.addEventListener("change", function () {
+    const file = this.files[0];
+    const fileLenght = 1 * 1024 * 1024;
+    if (file.size > fileLenght) {
+      alert("la taille de l'image > 4Mo");
+      return;
+    }
+    console.log(ajoutPhoto);
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      const cadrePhotoImg = document.getElementById("cadrephotoimg");
+      cadrePhotoImg.src = imageUrl;
+      cadrePhotoFirst.style.display = "none";
+      cadrePhotoImg.style.display = "block";
+    }
   });
 }
+
 modifier();
