@@ -232,7 +232,6 @@ async function ajouter() {
     popup2();
     ajouterphoto();
     valider();
-    ajouterwork();
     fermer();
     fermerFenetre();
     b_return();
@@ -296,38 +295,26 @@ function valider() {
   const categorieAjout = document.getElementById("categorie");
   boutonValider.classList.add("gris");
 
-  // Ajouter des écouteurs d'événements pour les champs de saisie
   cadrePhotoImg.addEventListener("input", verifajout);
   titreAjout.addEventListener("input", verifajout);
   categorieAjout.addEventListener("input", verifajout);
 
   function verifajout() {
-    // Vérifier si tous les champs requis sont remplis
     if (
       cadrePhotoImg.value !== "" &&
       titreAjout.value !== "" &&
       categorieAjout.value !== ""
     ) {
-      // Si oui, activer le bouton (rendre le texte vert)
       boutonValider.classList.add("vert");
-      // boutonValider.classList.remove("gris"); // Rétablir la couleur par défaut
-
-      // boutonValider.disabled = false;
     } else {
-      // Sinon, désactiver le bouton (rendre le texte à sa couleur par défaut)
       boutonValider.classList.remove("vert");
-      // Rétablir la couleur par défaut
-      // boutonValider.disabled = true;
     }
   }
-}
-async function ajouterwork() {
-  const url = "http://localhost:5678/api/works/";
-  const reponse = await fetch(url);
-  const works = await reponse.json();
-  // genererWorks(works);
-
-  console.log(works);
+  boutonValider.addEventListener("click", async function () {
+    if (boutonValider.classList.contains("vert")) {
+      alert("pppp");
+    }
+  });
 }
 
 modifier();
