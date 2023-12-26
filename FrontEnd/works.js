@@ -1,7 +1,7 @@
 import { popup1 } from "./popup.js";
 import { popup2 } from "./popup.js";
 // Récupération des pièces depuis l'API
-await fetch("http://localhost:5678/api/works/")
+await fetch("http://localhost:5678/api/works")
   .then(function (response) {
     if (response.status !== 200) {
       throw new Error(response.status);
@@ -12,6 +12,7 @@ await fetch("http://localhost:5678/api/works/")
   });
 //Récupération des travaux eventuellement stockées dans le localStorage
 let workes = window.localStorage.getItem("works");
+// console.log(workes);
 if (workes === null) {
   // Récupération des pièces depuis l'API
   const url = "http://localhost:5678/api/works/";
@@ -19,6 +20,8 @@ if (workes === null) {
   const works = await reponse.json();
   // Transformation des pièces en JSON
   const valeursWorks = JSON.stringify(works);
+  console.log(valeursWorks);
+  console.log(works);
   // Stockage des informations dans le localStorage
   window.localStorage.setItem("works", valeursWorks);
 } else {
@@ -116,9 +119,10 @@ async function callApi() {
   });
 }
 callApi();
+const tokens = localStorage.getItem("token");
 
 function connexion() {
-  const tokens = localStorage.getItem("token");
+  // const tokens = localStorage.getItem("token");
   const filtres = document.querySelector(".filtres");
   const entete = document.querySelector(".entete");
   const header = document.querySelector("header");
@@ -185,6 +189,8 @@ function fermer() {
 }
 
 function modifier() {
+  localStorage.getItem("token");
+
   const boutonModifier = document.getElementById("modif");
   const popupBack = document.querySelector(".popupBackground");
   boutonModifier.addEventListener("click", function (event) {
@@ -273,7 +279,7 @@ function ajouterphoto() {
   const ajoutPhoto = document.getElementById("ajoutphoto1");
   ajoutPhoto.addEventListener("change", function () {
     const file = this.files[0];
-    const fileLenght = 1 * 1024 * 1024;
+    const fileLenght = 4 * 1024 * 1024;
     if (file.size > fileLenght) {
       alert("la taille de l'image > 4Mo");
       return;
@@ -285,23 +291,29 @@ function ajouterphoto() {
       cadrePhotoImg.src = imageUrl;
       cadrePhotoFirst.style.display = "none";
       cadrePhotoImg.style.display = "block";
+      console.log(imageUrl);
     }
   });
 }
-function valider() {
+async function valider() {
+  const url = "http://localhost:5678/api/works/";
+  const reponse = await fetch(url);
+  const works = await reponse.json();
+  console.log(works);
+  localStorage.getItem("token");
   const cadrePhotoImg = document.getElementById("cadrephotoimg");
   const boutonValider = document.getElementById("valider");
   let titreAjout = document.getElementById("titre");
   const categorieAjout = document.getElementById("categorie");
   boutonValider.classList.add("gris");
-
+  console.log(categorieAjout);
   cadrePhotoImg.addEventListener("input", verifajout);
   titreAjout.addEventListener("input", verifajout);
   categorieAjout.addEventListener("input", verifajout);
 
   function verifajout() {
     if (
-      cadrePhotoImg.value !== "" &&
+      cadrePhotoImg.file !== "" &&
       titreAjout.value !== "" &&
       categorieAjout.value !== ""
     ) {
@@ -313,6 +325,40 @@ function valider() {
   boutonValider.addEventListener("click", async function () {
     if (boutonValider.classList.contains("vert")) {
       alert("pppp");
+      const title = titreAjout.value;
+      const image = cadrePhotoImg.src;
+      const categorie = categorieAjout.value;
+      console.log(title);
+      console.log(image);
+      console.log(categorie);
+      const formData = new FormData();
+      formData.append("title", title);
+      formData.append("category", categorie);
+      formData.append("image", image);
+      console.log(formData);
+      try {
+        const response = await fetch("http://localhost:5678/api/works/", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${tokens}`,
+          },
+          body: formData,
+        });
+        console.log(response);
+        if (response.ok) {
+          alert("Projet ajouté avec succès :)");
+
+          const responseData = await response.json();
+          console.log(responseData);
+          const token = responseData.token;
+          console.log(token);
+          localStorage.setItem("token", token);
+        } else {
+          console.error("Erreur lors de la requête POST à l'API");
+        }
+      } catch (error) {
+        console.error("Erreur lors de la requête POST à l'API:", error);
+      }
     }
   });
 }

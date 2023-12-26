@@ -29,6 +29,10 @@ function identification() {
         if (response.ok) {
           const responseData = await response.json();
           console.log(responseData);
+          const token = responseData.token;
+          console.log(token);
+          localStorage.setItem("token", token);
+
           window.location.href = "index.html";
         } else {
           console.log(response);
@@ -41,12 +45,6 @@ function identification() {
         alert("Erreur dans l’identifiant ou le mot de passe");
       }
     }
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTcwMDQ3ODcyNiwiZXhwIjoxNzAwNTY1MTI2fQ.oX-BCV6NVvJ85ByZHxFR2mg0aNt51X7uoZHHAcpbS1I";
-    localStorage.setItem("token", token);
-    console.log(token);
-    // localStorage.setItem("password", password);
-    // localStorage.setItem("email", email);
   });
 }
 identification();
