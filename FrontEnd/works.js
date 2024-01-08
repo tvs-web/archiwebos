@@ -231,7 +231,7 @@ async function trash() {
         );
 
         if (trashResponse.ok) {
-          alert("Projet supprimé avec succès :)");
+          alert("Projet supprimé avec succès !!");
           const trashResponseData = await trashResponse.text();
           const token = trashResponseData.token;
           // mise à jour localStorage
@@ -271,7 +271,6 @@ function b_return() {
   boutonReturn.addEventListener("click", function (event) {
     event.preventDefault();
     popupBack2.style.display = "none";
-    alert("rrr");
     popup1();
     fermerFenetre();
     trash();
@@ -339,7 +338,6 @@ async function valider() {
   }
   boutonValider.addEventListener("click", async function () {
     if (boutonValider.classList.contains("vert")) {
-      alert("pppp");
       const title = titreAjout.value;
       const image = inputAjoutPhoto.files[0];
       const categorie = categorieAjout.value;
@@ -357,7 +355,7 @@ async function valider() {
           body: formData,
         });
         if (response.ok) {
-          alert("Projet ajouté avec succès :)");
+          alert("Projet ajouté avec succès !!");
 
           const responseData = await response.json();
           const token = responseData.token;
