@@ -19,13 +19,9 @@ function identification() {
     if (
       identifiant.password.length < 4 ||
       !emailRegExp.test(identifiant.email)
-
-      // identifiant.password === ""
-      // email.value === ""
     ) {
       msgError.innerHTML = "Erreur dans l’identifiant ou le mot de passe";
-      // identifiant.appendChild(msgError);
-      // alert("Erreur dans l’identifiant ou le mot de passe");
+
       return;
     } else {
       const chargeUtile = JSON.stringify(identifiant);
@@ -49,19 +45,13 @@ function identification() {
           console.log(response);
           console.error("erreur lors de la requête:", response.status);
           msgError.innerHTML = "Erreur dans l’identifiant ou le mot de passe";
-          // identifiant.appendChild(msgError);
-          // alert("Erreur dans l’identifiant ou le mot de passe");
         }
       } catch (error) {
         console.error("Erreur lors de la requête", error);
-        // alert("Erreur dans l’identifiant ou le mot de passe");
+
         msgError.innerHTML = "Erreur dans l’identifiant ou le mot de passe";
       }
     }
   });
 }
 identification();
-// ---------------------------------------
-// const msgError = document.createElement("p");
-// msgError.innerHTML = "Erreur dans l’identifiant ou le mot de passe";
-// identifiant.appendChild(msgError);

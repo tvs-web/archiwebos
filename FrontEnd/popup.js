@@ -26,7 +26,6 @@ export function popup1() {
   popupBtn.classList.add("btnpopup");
   const trash = document.createElement("button");
   trash.id = "trash";
-  console.log(cloneProjects);
 
   main.appendChild(popupBack);
   main.insertBefore(popupBack, main.firstChild);

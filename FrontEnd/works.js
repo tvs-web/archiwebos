@@ -12,7 +12,6 @@ await fetch("http://localhost:5678/api/works")
   });
 //Récupération des travaux eventuellement stockées dans le localStorage
 let workes = window.localStorage.getItem("works");
-// console.log(workes);
 if (workes === null) {
   // Récupération des pièces depuis l'API
   const url = "http://localhost:5678/api/works/";
@@ -20,8 +19,6 @@ if (workes === null) {
   const works = await reponse.json();
   // Transformation des pièces en JSON
   const valeursWorks = JSON.stringify(works);
-  console.log(valeursWorks);
-  console.log(works);
   // Stockage des informations dans le localStorage
   window.localStorage.setItem("works", valeursWorks);
 } else {
@@ -136,7 +133,6 @@ function connexion() {
 
     // creation div pour insertion mode edit sur projet
     const divMesProjets = document.createElement("div");
-    // console.log(divMesProjets);
     divMesProjets.classList.add("entete1");
     //changement de "login" en "logout" + redirection sur page index
     document.getElementById("login").innerHTML = "logout";
@@ -183,7 +179,6 @@ localStorage.clear();
 
 function fermer() {
   const boutonFermer = document.getElementById("closemodal");
-  console.log(boutonFermer);
   const popupBack = document.querySelector(".popupBackground");
   const popupBack2 = document.querySelector(".popupBackground2");
   boutonFermer.addEventListener("click", function (event) {
@@ -211,7 +206,6 @@ async function trash() {
   const url = "http://localhost:5678/api/works/";
   const reponse = await fetch(url);
   const works = await reponse.json();
-  console.log(works);
 
   // ----------------------------------------------------
 
@@ -221,12 +215,10 @@ async function trash() {
     btnTrash.addEventListener("click", async function () {
       const parentFig = btnTrash.closest("figure");
       parentFig.remove();
-      console.log(works);
       const workId = works.find(
         (work) => work.imageUrl === fig.querySelector("img").src
       ).id;
       try {
-        // Delete the project using the obtained ID
         const trashResponse = await fetch(
           `http://localhost:5678/api/works/${workId}`,
           {
@@ -241,10 +233,8 @@ async function trash() {
         if (trashResponse.ok) {
           alert("Projet supprimé avec succès :)");
           const trashResponseData = await trashResponse.text();
-          console.log(trashResponseData);
           const token = trashResponseData.token;
-          console.log(token);
-          // Update localStorage token or perform any other necessary action
+          // mise à jour localStorage
           localStorage.setItem("token", tokens);
         } else {
           console.error("Erreur lors de la requête DELETE à l'API");
@@ -258,13 +248,10 @@ async function trash() {
 async function ajouter() {
   const url = "http://localhost:5678/api/works/";
   const reponse = await fetch(url);
-  const works = await reponse.json();
-  console.log(works);
 
   // ----------------------------------
   const boutonAjouter = document.querySelector(".btnpopup");
   const popupBack = document.querySelector(".popupBackground");
-  const popupBack2 = document.querySelector(".popupBackground2");
 
   boutonAjouter.addEventListener("click", function (event) {
     event.preventDefault();
@@ -279,7 +266,6 @@ async function ajouter() {
 }
 function b_return() {
   const boutonReturn = document.getElementById("returnmodal");
-  console.log(boutonReturn);
   const popupBack2 = document.querySelector(".popupBackground2");
   const popupBack = document.querySelector(".popupBackground");
   boutonReturn.addEventListener("click", function (event) {
@@ -318,14 +304,12 @@ function ajouterphoto() {
       alert("la taille de l'image > 4Mo");
       return;
     }
-    console.log(ajoutPhoto);
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       const cadrePhotoImg = document.getElementById("cadrephotoimg");
       cadrePhotoImg.src = imageUrl;
       cadrePhotoFirst.style.display = "none";
       cadrePhotoImg.style.display = "block";
-      console.log(imageUrl);
     }
   });
 }
@@ -337,18 +321,11 @@ async function valider() {
   const cadrePhotoImg = document.querySelector("#cadrephotoimg");
 
   boutonValider.classList.add("gris");
-  console.log(categorieAjout);
   titreAjout.addEventListener("change", verifajout);
   inputAjoutPhoto.addEventListener("change", verifajout);
   categorieAjout.addEventListener("change", verifajout);
   function verifajout() {
     ajouterphoto();
-
-    console.log("categorie2 ", JSON.stringify(cadrePhotoImg));
-    console.log("cadre ", JSON.stringify(cadrePhotoImg));
-    console.log("cadre 2 ", cadrePhotoImg.src);
-    console.log("titre ", titreAjout.value);
-    console.log("categorie ", categorieAjout.value);
 
     if (
       titreAjout.value !== "" &&
@@ -366,17 +343,10 @@ async function valider() {
       const title = titreAjout.value;
       const image = inputAjoutPhoto.files[0];
       const categorie = categorieAjout.value;
-      console.log(title);
-      console.log(image);
-      console.log(categorie);
       const formData = new FormData();
       formData.append("title", title);
       formData.append("category", categorie);
       formData.append("image", image);
-      console.log(formData, image);
-      console.log(formData, title);
-      console.log(formData, categorie);
-      console.log(formData);
       try {
         const response = await fetch("http://localhost:5678/api/works", {
           method: "POST",
@@ -386,16 +356,12 @@ async function valider() {
           },
           body: formData,
         });
-        console.log(response);
         if (response.ok) {
           alert("Projet ajouté avec succès :)");
 
           const responseData = await response.json();
-          console.log(responseData);
           const token = responseData.token;
-          console.log(token);
           localStorage.setItem("token", tokens);
-          // localStorage.removeItem("token");
         } else {
           console.error("Erreur lors de la requête POST à l'API");
         }
