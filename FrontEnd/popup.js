@@ -103,10 +103,16 @@ export function popup2() {
   const optionCategorieInput = document.createElement("option");
   optionCategorieInput.value = "";
   const optionCategorieInput1 = document.createElement("option");
+  optionCategorieInput1.value = "1";
+
   optionCategorieInput1.textContent = "Objets";
   const optionCategorieInput2 = document.createElement("option");
+  optionCategorieInput2.value = "2";
+
   optionCategorieInput2.textContent = "Appartements";
   const optionCategorieInput3 = document.createElement("option");
+  optionCategorieInput3.value = "3";
+
   optionCategorieInput3.textContent = "Hotels & restaurants";
   const popupBtnAjout = document.createElement("button");
   popupBtnAjout.id = "valider";

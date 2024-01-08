@@ -138,7 +138,10 @@ function connexion() {
     const divMesProjets = document.createElement("div");
     // console.log(divMesProjets);
     divMesProjets.classList.add("entete1");
-    // header.insertBefore(divMesProjets, portfolio.firstChild);
+    //changement de "login" en "logout" + redirection sur page index
+    document.getElementById("login").innerHTML = "logout";
+
+    document.getElementById("login").href = "index.html";
 
     // creation icone et paragraphe mode edit
     const enteteIcone = document.createElement("i");
@@ -177,6 +180,7 @@ function connexion() {
 }
 connexion();
 localStorage.clear();
+
 function fermer() {
   const boutonFermer = document.getElementById("closemodal");
   console.log(boutonFermer);
@@ -214,10 +218,40 @@ async function trash() {
   const figs = document.querySelectorAll(".fig");
   figs.forEach(function (fig) {
     const btnTrash = fig.querySelector("#trash");
-    btnTrash.addEventListener("click", function () {
+    btnTrash.addEventListener("click", async function () {
       const parentFig = btnTrash.closest("figure");
       parentFig.remove();
       console.log(works);
+      const workId = works.find(
+        (work) => work.imageUrl === fig.querySelector("img").src
+      ).id;
+      try {
+        // Delete the project using the obtained ID
+        const trashResponse = await fetch(
+          `http://localhost:5678/api/works/${workId}`,
+          {
+            method: "DELETE",
+            headers: {
+              Accept: "application/json",
+              Authorization: "Bearer " + tokens,
+            },
+          }
+        );
+
+        if (trashResponse.ok) {
+          alert("Projet supprimé avec succès :)");
+          const trashResponseData = await trashResponse.text();
+          console.log(trashResponseData);
+          const token = trashResponseData.token;
+          console.log(token);
+          // Update localStorage token or perform any other necessary action
+          localStorage.setItem("token", tokens);
+        } else {
+          console.error("Erreur lors de la requête DELETE à l'API");
+        }
+      } catch (error) {
+        console.error("Erreur lors de la requête DELETE à l'API:", error);
+      }
     });
   });
 }
@@ -296,26 +330,30 @@ function ajouterphoto() {
   });
 }
 async function valider() {
-  const url = "http://localhost:5678/api/works/";
-  const reponse = await fetch(url);
-  const works = await reponse.json();
-  console.log(works);
-  localStorage.getItem("token");
-  const cadrePhotoImg = document.getElementById("cadrephotoimg");
   const boutonValider = document.getElementById("valider");
   let titreAjout = document.getElementById("titre");
   const categorieAjout = document.getElementById("categorie");
+  const inputAjoutPhoto = document.getElementById("ajoutphoto1");
+  const cadrePhotoImg = document.querySelector("#cadrephotoimg");
+
   boutonValider.classList.add("gris");
   console.log(categorieAjout);
-  cadrePhotoImg.addEventListener("input", verifajout);
-  titreAjout.addEventListener("input", verifajout);
-  categorieAjout.addEventListener("input", verifajout);
-
+  titreAjout.addEventListener("change", verifajout);
+  inputAjoutPhoto.addEventListener("change", verifajout);
+  categorieAjout.addEventListener("change", verifajout);
   function verifajout() {
+    ajouterphoto();
+
+    console.log("categorie2 ", JSON.stringify(cadrePhotoImg));
+    console.log("cadre ", JSON.stringify(cadrePhotoImg));
+    console.log("cadre 2 ", cadrePhotoImg.src);
+    console.log("titre ", titreAjout.value);
+    console.log("categorie ", categorieAjout.value);
+
     if (
-      cadrePhotoImg.file !== "" &&
       titreAjout.value !== "" &&
-      categorieAjout.value !== ""
+      categorieAjout.value !== "" &&
+      cadrePhotoImg.src !== ""
     ) {
       boutonValider.classList.add("vert");
     } else {
@@ -326,7 +364,7 @@ async function valider() {
     if (boutonValider.classList.contains("vert")) {
       alert("pppp");
       const title = titreAjout.value;
-      const image = cadrePhotoImg.src;
+      const image = inputAjoutPhoto.files[0];
       const categorie = categorieAjout.value;
       console.log(title);
       console.log(image);
@@ -335,12 +373,16 @@ async function valider() {
       formData.append("title", title);
       formData.append("category", categorie);
       formData.append("image", image);
+      console.log(formData, image);
+      console.log(formData, title);
+      console.log(formData, categorie);
       console.log(formData);
       try {
-        const response = await fetch("http://localhost:5678/api/works/", {
+        const response = await fetch("http://localhost:5678/api/works", {
           method: "POST",
           headers: {
-            Authorization: `Bearer ${tokens}`,
+            Accept: "application/json",
+            Authorization: "Bearer " + tokens,
           },
           body: formData,
         });
@@ -352,7 +394,8 @@ async function valider() {
           console.log(responseData);
           const token = responseData.token;
           console.log(token);
-          localStorage.setItem("token", token);
+          localStorage.setItem("token", tokens);
+          // localStorage.removeItem("token");
         } else {
           console.error("Erreur lors de la requête POST à l'API");
         }
