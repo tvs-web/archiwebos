@@ -1,3 +1,26 @@
+//---------------construction des boutons dans le DOM---------------
+
+export function popup0() {
+  const filtres = document.querySelector(".filtres");
+  const buttonTous = document.createElement("button");
+  buttonTous.classList.add("btn_tous");
+  buttonTous.textContent = "Tous";
+  const buttonObjets = document.createElement("button");
+  buttonObjets.classList.add("btn_objets");
+  buttonObjets.textContent = "Objets";
+  const buttonAppartements = document.createElement("button");
+  buttonAppartements.classList.add("btn_appartements");
+  buttonAppartements.textContent = "Appartements";
+  const buttonHotels_Restaurants = document.createElement("button");
+  buttonHotels_Restaurants.classList.add("btn_hotels_restaurants");
+  buttonHotels_Restaurants.textContent = "Hotels & restaurants";
+  filtres.appendChild(buttonTous);
+  filtres.appendChild(buttonObjets);
+  filtres.appendChild(buttonAppartements);
+  filtres.appendChild(buttonHotels_Restaurants);
+}
+//---------------construction premiere fenetre modale DOM---------------
+
 export function popup1() {
   const main = document.querySelector("main");
   const popupBack = document.createElement("div");
@@ -41,6 +64,8 @@ export function popup1() {
   popup.appendChild(popupBtn);
   cloneProjects.appendChild(trash);
 }
+//---------------construction seconde fenetre modale DOM---------------
+
 export function popup2() {
   const main = document.querySelector("main");
   const popupBack2 = document.createElement("div");

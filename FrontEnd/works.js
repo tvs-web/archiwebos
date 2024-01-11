@@ -1,3 +1,4 @@
+import { popup0 } from "./popup.js";
 import { popup1 } from "./popup.js";
 import { popup2 } from "./popup.js";
 // Récupération des pièces depuis l'API
@@ -10,7 +11,7 @@ await fetch("http://localhost:5678/api/works")
   .catch(function (error) {
     return;
   });
-//Récupération des travaux eventuellement stockées dans le localStorage
+//Récupération des travaux  stockés dans le localStorage
 let workes = window.localStorage.getItem("works");
 if (workes === null) {
   // Récupération des pièces depuis l'API
@@ -24,97 +25,90 @@ if (workes === null) {
 } else {
   workes = JSON.parse(workes);
 }
+
+//---------------implementation de la gallery dans le DOM---------------
+function genererWorks(works) {
+  document.querySelector(".gallery").innerHTML = "";
+
+  for (let i = 0; i < works.length; i++) {
+    const projects = document.querySelector(".gallery");
+    const figure = works[i];
+    const projectsFigure = document.createElement("figure");
+    projectsFigure.classList.add("fig");
+    const projectsImage = document.createElement("img");
+    projectsImage.src = figure.imageUrl;
+    const projectsfigcaption = document.createElement("figcaption");
+    projectsfigcaption.textContent = figure.title;
+    const trash = document.createElement("button");
+    trash.id = "trash";
+    const trashIcone = document.createElement("i");
+    trashIcone.className = "fa-regular fa-trash-can";
+    trashIcone.style.color = "white";
+    trashIcone.style.position = "relative";
+    projectsFigure.appendChild(projectsImage);
+    projectsFigure.appendChild(projectsfigcaption);
+    projects.appendChild(projectsFigure);
+    projectsFigure.appendChild(trashIcone);
+    projectsFigure.appendChild(trash);
+    trash.appendChild(trashIcone);
+  }
+}
+
 //---------------------------RECUPERATION DES TRAVAUX DEPUIS LE BACKEND------------------------------
 async function callApi() {
   const url = "http://localhost:5678/api/works/";
   const reponse = await fetch(url);
   const works = await reponse.json();
   genererWorks(works);
+  popup0();
+  boutontous();
+  boutonobjets();
+  boutonappartements();
+  boutonhotels_restaurants();
 
-  function genererWorks(works) {
-    document.querySelector(".gallery").innerHTML = "";
+  // -----------------gestion des boutons-------------------------
 
-    for (let i = 0; i < works.length; i++) {
-      const projects = document.querySelector(".gallery");
-      const figure = works[i];
-      const projectsFigure = document.createElement("figure");
-      projectsFigure.classList.add("fig");
-      const projectsImage = document.createElement("img");
-      projectsImage.src = figure.imageUrl;
-      const projectsfigcaption = document.createElement("figcaption");
-      projectsfigcaption.textContent = figure.title;
-      const trash = document.createElement("button");
-      trash.id = "trash";
-      const trashIcone = document.createElement("i");
-      trashIcone.className = "fa-regular fa-trash-can";
-      trashIcone.style.color = "white";
-      trashIcone.style.position = "relative";
-
-      projectsFigure.appendChild(projectsImage);
-      projectsFigure.appendChild(projectsfigcaption);
-      projects.appendChild(projectsFigure);
-      projectsFigure.appendChild(trashIcone);
-      projectsFigure.appendChild(trash);
-      trash.appendChild(trashIcone);
-    }
+  function boutontous() {
+    const boutonTous = document.querySelector(".btn_tous");
+    boutonTous.addEventListener("click", function () {
+      document.querySelector(".gallery").innerHTML = "";
+      genererWorks(works);
+    });
   }
-  //--------------------------------------------------------------
-
-  const filtres = document.querySelector(".filtres");
-  const buttonTous = document.createElement("button");
-  buttonTous.classList.add("btn_tous");
-  buttonTous.textContent = "Tous";
-  const buttonObjets = document.createElement("button");
-  buttonObjets.classList.add("btn_objets");
-  buttonObjets.textContent = "Objets";
-  const buttonAppartements = document.createElement("button");
-  buttonAppartements.classList.add("btn_appartements");
-  buttonAppartements.textContent = "Appartements";
-  const buttonHotels_Restaurants = document.createElement("button");
-  buttonHotels_Restaurants.classList.add("btn_hotels_restaurants");
-  buttonHotels_Restaurants.textContent = "Hotels & restaurants";
-  filtres.appendChild(buttonTous);
-  filtres.appendChild(buttonObjets);
-  filtres.appendChild(buttonAppartements);
-  filtres.appendChild(buttonHotels_Restaurants);
-  // ----------------GESTION DES BOUTONS-------------------------
-
-  const boutonTous = document.querySelector(".btn_tous");
-  boutonTous.addEventListener("click", function () {
-    document.querySelector(".gallery").innerHTML = "";
-    genererWorks(works);
-  });
-
-  const boutonObjets = document.querySelector(".btn_objets");
-  boutonObjets.addEventListener("click", function () {
-    const worksObjets = works.filter(function (work) {
-      return work.category.name === "Objets";
+  function boutonobjets() {
+    const boutonObjets = document.querySelector(".btn_objets");
+    boutonObjets.addEventListener("click", function () {
+      const worksObjets = works.filter(function (work) {
+        return work.category.name === "Objets";
+      });
+      document.querySelector(".gallery").innerHTML = "";
+      genererWorks(worksObjets);
     });
-    document.querySelector(".gallery").innerHTML = "";
-    genererWorks(worksObjets);
-  });
-
-  const boutonAppartements = document.querySelector(".btn_appartements");
-
-  boutonAppartements.addEventListener("click", function () {
-    const worksAppartements = works.filter(function (work) {
-      return work.category.name === "Appartements";
+  }
+  function boutonappartements() {
+    const boutonAppartements = document.querySelector(".btn_appartements");
+    boutonAppartements.addEventListener("click", function () {
+      const worksAppartements = works.filter(function (work) {
+        return work.category.name === "Appartements";
+      });
+      document.querySelector(".gallery").innerHTML = "";
+      genererWorks(worksAppartements);
     });
-    document.querySelector(".gallery").innerHTML = "";
-    genererWorks(worksAppartements);
-  });
-
-  const boutonHotels_restaurants = document.querySelector(
-    ".btn_hotels_restaurants"
-  );
-  boutonHotels_restaurants.addEventListener("click", function () {
-    const worksHotels_restaurants = works.filter(function (work) {
-      return work.category.name === "Hotels & restaurants";
+  }
+  function boutonhotels_restaurants() {
+    const boutonHotels_restaurants = document.querySelector(
+      ".btn_hotels_restaurants"
+    );
+    boutonHotels_restaurants.addEventListener("click", function () {
+      const worksHotels_restaurants = works.filter(function (work) {
+        return work.category.name === "Hotels & restaurants";
+      });
+      document.querySelector(".gallery").innerHTML = "";
+      genererWorks(worksHotels_restaurants);
     });
-    document.querySelector(".gallery").innerHTML = "";
-    genererWorks(worksHotels_restaurants);
-  });
+  }
 }
+
 callApi();
 const tokens = localStorage.getItem("token");
 
@@ -191,7 +185,6 @@ function modifier() {
   localStorage.getItem("token");
 
   const boutonModifier = document.getElementById("modif");
-  const popupBack = document.querySelector(".popupBackground");
   boutonModifier.addEventListener("click", function (event) {
     event.preventDefault();
     popup1();
@@ -206,9 +199,6 @@ async function trash() {
   const url = "http://localhost:5678/api/works/";
   const reponse = await fetch(url);
   const works = await reponse.json();
-
-  // ----------------------------------------------------
-
   const figs = document.querySelectorAll(".fig");
   figs.forEach(function (fig) {
     const btnTrash = fig.querySelector("#trash");
@@ -248,8 +238,6 @@ async function trash() {
 async function ajouter() {
   const url = "http://localhost:5678/api/works/";
   const reponse = await fetch(url);
-
-  // ----------------------------------
   const boutonAjouter = document.querySelector(".btnpopup");
   const popupBack = document.querySelector(".popupBackground");
 
@@ -268,6 +256,7 @@ function b_return() {
   const boutonReturn = document.getElementById("returnmodal");
   const popupBack2 = document.querySelector(".popupBackground2");
   const popupBack = document.querySelector(".popupBackground");
+
   boutonReturn.addEventListener("click", function (event) {
     event.preventDefault();
     popupBack2.style.display = "none";
@@ -282,6 +271,7 @@ function b_return() {
 function fermerFenetre() {
   const popupBack = document.querySelector(".popupBackground");
   const popupBack2 = document.querySelector(".popupBackground2");
+
   popupBack.addEventListener("click", function (event) {
     if (event.target === popupBack) {
       popupBack.style.display = "none";
@@ -296,6 +286,7 @@ function fermerFenetre() {
 function ajouterphoto() {
   const cadrePhotoFirst = document.querySelector(".cadrephotofirst");
   const ajoutPhoto = document.getElementById("ajoutphoto1");
+
   ajoutPhoto.addEventListener("change", function () {
     const file = this.files[0];
     const fileLenght = 4 * 1024 * 1024;
